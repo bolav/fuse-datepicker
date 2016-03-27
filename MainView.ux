@@ -1,20 +1,10 @@
 <App Theme="NativeWithFallback">
-	<DatePicker ux:Global="DatePicker" />
-	<JavaScript>
-		var dp = require('DatePicker');
-		function show_dp () {
-			console.log("show dp");
-			dp.show();
-		}
-		module.exports = {
-			show_dp: show_dp
-		}
-	</JavaScript>
-	<DockPanel>
-		<StatusBarBackground Dock="Top"/>
+	<ClientPanel>
 		<StackPanel>
-			<Button Text="DatePicker" Clicked="{show_dp}" />
+			<iOSDatePicker>
+				<DatePickerImpl />
+			</iOSDatePicker>
 		</StackPanel>
-	</DockPanel>
+	</ClientPanel>
 </App>
 

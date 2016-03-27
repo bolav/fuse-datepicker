@@ -8,20 +8,24 @@ using Uno.Compiler.ExportTargetInterop;
 extern (iOS)
 public class DatePickerImpl : Fuse.iOS.Controls.Control<iOSDatePicker>
 {
+	iOS.UIKit.UIView _view;
+	ObjC.ID _viewid;
+
 	internal override UIView CreateInternal()
 	{
-		var v = CreateImpl();
-		return v;
+		if (_view == null)
+		{
+			_viewid = CreateView();
+			_view = new iOS.UIKit.UIView(_viewid);
+		}
+		return _view;
 	}
 
-	iOS.UIKit.UIView CreateImpl() {
-		iOS.UIKit.UIDatePicker dp = new iOS.UIKit.UIDatePicker();
-		
-
-	}
+	[Foreign(Language.ObjC)]
+	public ObjC.ID CreateView ()
 	@{
-		FBSDKLoginButton *loginButton = [[FBSDKLoginButton alloc] init];
-		return (@{iOS.UIKit.UIView})uObjC::Lifetime::GetUnoObject(loginButton, @{iOS.UIKit.UIView:TypeOf});
+		UIDatePicker *myPicker = [[UIDatePicker alloc] init];
+		return myPicker;
 	@}
 
 	protected override void Attach()
@@ -34,7 +38,7 @@ public class DatePickerImpl : Fuse.iOS.Controls.Control<iOSDatePicker>
 	}
 
 	public override float2 GetMarginSize( LayoutParams lp ) {
-		return float2(55);
+		return float2(250);
 	}
 
 }
