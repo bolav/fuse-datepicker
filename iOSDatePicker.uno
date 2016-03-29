@@ -5,29 +5,30 @@ using Fuse;
 using Fuse.Controls;
 public class iOSDatePicker : Panel
 {
-	public event ValueChangedHandler<String> DateChanged;
-
-
+	public event ValueChangedHandler<int> DateChanged;
 
 	[UXValueChangedEvent("SetDate", "DateChanged")]
-	string _date;
-	public string Date {
+	int _date;
+	public int Date {
 		get { return _date; } 
 		set {
+			debug_log "Date set to " + value;
 			var s = _date;
 			_date = value;
 			OnDateChanged(value, s);
 		}
 	}
-	public void SetDate(string value, object origin)
+	public void SetDate(int value, object origin)
 	{
+		debug_log "SetDate " + value;
 		Date = value;
 	}
 
-	void OnDateChanged(string value, string orig)
+	void OnDateChanged(int value, int orig)
 	{
+		debug_log "OnDateChanged";
 		if (DateChanged != null)
-			DateChanged(this, new ValueChangedArgs<string>(value, orig));
+			DateChanged(this, new ValueChangedArgs<int>(value, orig));
 	}
 
 }

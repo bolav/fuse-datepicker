@@ -1,12 +1,20 @@
 <App Theme="NativeWithFallback">
 	<JavaScript>
 		var Observable = require('FuseJS/Observable');
-		var date = Observable();
+		var d = new Date();
+		var e = d.getTime() / 1000;
+		var date = Observable(e);
 		date.addSubscriber(function () {
 			console.log("date is now: " + date.value);
 		})
-		module.export = {
-			date: date
+
+		function click () {
+			console.log("click date: " + date.value);
+		}
+
+		module.exports = {
+			date: date,
+			click: click
 		}
 	</JavaScript>
 	<ClientPanel>
@@ -14,6 +22,7 @@
 			<iOSDatePicker Date="{date}">
 				<DatePickerImpl />
 			</iOSDatePicker>
+			<Button Clicked="{click}" Text="Button!!!"/>
 		</StackPanel>
 	</ClientPanel>
 </App>
