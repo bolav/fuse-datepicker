@@ -30,7 +30,7 @@ public class DatePickerImpl : Fuse.iOS.Controls.Control<iOSDatePicker>
 
 	protected override void Attach()
 	{
-		// CreateInternal();
+		CreateInternal();
 	}
 
 	protected override void Detach()

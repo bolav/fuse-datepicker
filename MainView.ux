@@ -1,7 +1,17 @@
 <App Theme="NativeWithFallback">
+	<JavaScript>
+		var Observable = require('FuseJS/Observable');
+		var date = Observable();
+		date.addSubscriber(function () {
+			console.log("date is now: " + date.value);
+		})
+		module.export = {
+			date: date
+		}
+	</JavaScript>
 	<ClientPanel>
 		<StackPanel>
-			<iOSDatePicker>
+			<iOSDatePicker Date="{date}">
 				<DatePickerImpl />
 			</iOSDatePicker>
 		</StackPanel>
