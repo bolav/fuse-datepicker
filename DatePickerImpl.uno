@@ -1,5 +1,5 @@
 using Uno;
-using Uno.Collections;
+using Uno.UX;
 using Fuse;
 using iOS.UIKit;
 using Uno.Compiler.ExportTargetInterop;
@@ -52,17 +52,32 @@ public class DatePickerImpl : Fuse.iOS.Controls.Control<iOSDatePicker>
 		[deleg setDatePicker:_this];
 	@}
 
+	[Foreign(Language.ObjC)]
+	public void SetDate (ObjC.ID dp, int dv)
+	@{
+		[dp setDate:[NSDate dateWithTimeIntervalSince1970:dv] animated:YES];
+	@}
+
 	protected override void Attach()
 	{
 		CreateInternal();
+		SetDate(_viewid, SemanticControl.Date);
+		SemanticControl.DateChanged += OnDateChanged;
+
 	}
 
 	protected override void Detach()
 	{
+		SemanticControl.DateChanged -= OnDateChanged;
 	}
 
 	public override float2 GetMarginSize( LayoutParams lp ) {
 		return float2(250);
+	}
+
+	void OnDateChanged(object sender, ValueChangedArgs<int> args)
+	{
+		SetDate(_viewid, args.Value);
 	}
 
 }

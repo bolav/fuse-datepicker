@@ -3,7 +3,7 @@
 		var Observable = require('FuseJS/Observable');
 		var d = new Date();
 		var e = d.getTime() / 1000;
-		var date = Observable(e);
+		var date = Observable(1000);
 		date.addSubscriber(function () {
 			console.log("date is now: " + date.value);
 		})
