@@ -8,27 +8,24 @@ public class iOSDatePicker : Panel
 	public event ValueChangedHandler<int> DateChanged;
 
 	[UXValueChangedEvent("SetDate", "DateChanged")]
-	int _date;
 	public int Date {
-		get { return _date; } 
-		set {
-			debug_log "Date set to " + value;
-			var s = _date;
-			_date = value;
-			OnDateChanged(value, s);
-		}
+		get;
+		set;
 	}
 	public void SetDate(int value, object origin)
 	{
 		debug_log "SetDate " + value;
 		Date = value;
+		OnDateChanged(value, origin);
 	}
 
-	void OnDateChanged(int value, int orig)
+	void OnDateChanged(int value, object orig)
 	{
 		debug_log "OnDateChanged";
-		if (DateChanged != null)
+		if (DateChanged != null) {
+			debug_log "Calling DateChanged " + DateChanged;
 			DateChanged(this, new ValueChangedArgs<int>(value, orig));
+		}
 	}
 
 }

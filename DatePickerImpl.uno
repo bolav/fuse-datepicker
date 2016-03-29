@@ -27,7 +27,7 @@ public class DatePickerImpl : Fuse.iOS.Controls.Control<iOSDatePicker>
 
 	public void Picked (int picked) {
 		debug_log "We picked " + picked;
-		SemanticControl.Date = picked;
+		SemanticControl.SetDate(picked, this);
 	}
 
 	[Foreign(Language.ObjC)]
@@ -77,7 +77,12 @@ public class DatePickerImpl : Fuse.iOS.Controls.Control<iOSDatePicker>
 
 	void OnDateChanged(object sender, ValueChangedArgs<int> args)
 	{
-		SetDate(_viewid, args.Value);
+		debug_log "Impl OnDateChanged";
+		if (args.Origin != this) {
+			debug_log "Impl OnDateChanged changing";
+
+			SetDate(_viewid, args.Value);
+		}
 	}
 
 }

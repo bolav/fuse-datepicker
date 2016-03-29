@@ -10,6 +10,12 @@
 
 		function click () {
 			console.log("click date: " + date.value);
+			if (date.value > 1459038000) {
+				date.value = 500;
+			}
+			else {
+				date.value = e;
+			}
 		}
 
 		module.exports = {
