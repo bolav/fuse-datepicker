@@ -30,7 +30,6 @@
   ],
   "Includes": [
     "*.uno",
-    "*.ux",
     "*.h:ObjCHeader:iOS",
     "*.mm:ObjCSource:iOS"
   ]
