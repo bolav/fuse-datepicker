@@ -14,47 +14,57 @@ extern(!iOS) public class iOSDatePicker : Panel {
 [ForeignInclude(Language.ObjC, "DatePickerDelegate.h")]
 extern(iOS) public class iOSDatePicker : LeafView
 {
-	public iOSDatePicker() : base(Create()) { }
 
-	[Require("Entity","DatePickerImpl.Picked(int)")]
+	IDisposable _valueChangedEvent;
+	public iOSDatePicker() : base(Create()) { 
+		_valueChangedEvent = UIControlEvent.AddValueChangedCallback(Handle, OnValueChanged);
+	}
+
 	[Foreign(Language.ObjC)]
 	static ObjC.Object Create()
 	@{
 		::UIDatePicker* dp = [[UIDatePicker alloc] init];
-		// DatePickerDelegate *del = [[DatePickerDelegate alloc] init];
-		// [dp addTarget:deleg action:@selector(dateChanged:) forControlEvents:UIControlEventValueChanged];
-		// [deleg setDatePicker:_this];
 		return dp;
-
 	@}
 
-	public event ValueChangedHandler<int> DateChanged;
+	public override void Dispose()
+	{
+		_valueChangedEvent.Dispose();
+		_valueChangedEvent = null;
+		base.Dispose();
+	}
+
+	void OnValueChanged(ObjC.Object sender, ObjC.Object uiEvent)
+	{
+		// _host.OnProgressChanged( (double)(Value / 100.0f) );
+	}
+
+	// public event ValueChangedHandler<int> DateChanged;
 
 	// [UXValueChangedEvent("SetDate", "DateChanged")]
 	public int Date {
-		get;
-		set;
+		get { return GetDate(Handle); }
+		set { SetDate(Handle, value); }
 	}
 
 	public void Picked (int picked) {
 		debug_log "We picked " + picked;
-		SetDate(picked, this);
+		SetDate(Handle, picked);
 	}
 
-	public void SetDate(int value, object origin)
-	{
-		debug_log "SetDate " + value;
-		Date = value;
-		OnDateChanged(value, origin);
-	}
+	[Foreign(Language.ObjC)]
+	static int GetDate(ObjC.Object handle)
+	@{
+	    ::UIDatePicker* dp = (::UIDatePicker*)handle;
+	    NSDate *chosen = [dp date];
+	    int epoch = (int)[chosen timeIntervalSince1970];
+	    return epoch;
+	@}
 
-	void OnDateChanged(int value, object orig)
-	{
-		debug_log "OnDateChanged";
-		if (DateChanged != null) {
-			debug_log "Calling DateChanged " + DateChanged;
-			DateChanged(this, new ValueChangedArgs<int>(value, orig));
-		}
-	}
+	[Foreign(Language.ObjC)]
+	static void SetDate(ObjC.Object dp, int dv)
+	@{
+	    [dp setDate:[NSDate dateWithTimeIntervalSince1970:dv] animated:YES];
+	@}
 
 }

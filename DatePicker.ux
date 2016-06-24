@@ -1,0 +1,12 @@
+<Control ux:Class="DatePicker">
+    <int ux:Property="Date" />
+
+    <iOSDatePicker ux:Template="iOSAppearance" Date="{Property this.Date}" />
+
+    <Text ux:Template="GraphicsAppearance">
+        DatePicker is not available in this context.
+    </Text>
+    <Text ux:Template="AndroidAppearance">
+        DatePicker is not available in this context.
+    </Text>
+</Control>
