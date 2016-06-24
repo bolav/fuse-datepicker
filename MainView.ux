@@ -1,4 +1,4 @@
-<App Theme="NativeWithFallback">
+<App>
 	<JavaScript>
 		var Observable = require('FuseJS/Observable');
 		var d = new Date();
@@ -26,7 +26,6 @@
 	<ClientPanel>
 		<StackPanel>
 			<iOSDatePicker Date="{date}">
-				<DatePickerImpl />
 			</iOSDatePicker>
 			<Button Clicked="{click}" Text="Button!!!"/>
 		</StackPanel>
