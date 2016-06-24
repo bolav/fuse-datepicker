@@ -1,4 +1,4 @@
-Fuse DatePicker
+Fuse DatePicker [![Build Status](https://travis-ci.org/bolav/fuse-datepicker.svg?branch=master)](https://travis-ci.org/bolav/fuse-datepicker) 
 ===============
 
 Library to use DatePicker in [Fuse](http://www.fusetools.com/).
